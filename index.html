@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>hi.com</title>
+    </head>
+    <body>
+        <input type="text" id="inputField">
+<button onclick="sendText()">Send</button>
+<button id="clearBtn" onclick="clearMessages()">Clear</button>
+<div id="messageContainer"></div>
+
+<script>
+    // Send the message and store it in local storage
+function sendText() {
+  // Get the input field value
+  var text = document.getElementById("inputField").value;
+
+  // Get the message container div
+  var messageContainer = document.getElementById("messageContainer");
+
+  // Create a new div to hold the message
+  var newMessage = document.createElement("div");
+
+  // Set the message text
+  newMessage.innerHTML = text;
+
+  // Add the new message div to the container
+  messageContainer.appendChild(newMessage);
+
+  // Clear the input field
+  document.getElementById("inputField").value = "";
+
+  // Store the message in local storage
+  var messages = JSON.parse(localStorage.getItem("messages")) || [];
+  messages.push(text);
+  localStorage.setItem("messages", JSON.stringify(messages));
+}
+
+// Load the messages from local storage when the page loads
+window.onload = function() {
+  var messages = JSON.parse(localStorage.getItem("messages")) || [];
+  var messageContainer = document.getElementById("messageContainer");
+  for (var i = 0; i < messages.length; i++) {
+    var newMessage = document.createElement("div");
+    newMessage.innerHTML = messages[i];
+    messageContainer.appendChild(newMessage);
+  }
+}
+
+function clearMessages() {
+  // Clear the input field
+  document.getElementById("inputField").value = "";
+
+  // Clear the message container div
+  var messageContainer = document.getElementById("messageContainer");
+  messageContainer.innerHTML = "";
+
+  // Clear the messages from local storage
+  localStorage.removeItem("messages");
+
+
+}
+</script>
+    </body>
+
+</html>
+
+
+
